@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { adaugaZile, formatDate, formatLei } from "@/lib/utils";
-import { DURATA_ABONAMENT_ZILE, TIPURI_ABONAMENT } from "@/types";
+import { TIPURI_ABONAMENT } from "@/types";
 import type { Abonament, TipAbonament } from "@/types";
 
 // Notă: componenta se remontează (prin `key`) pentru fiecare abonament,
@@ -34,7 +34,7 @@ export function EditAbonamentDialog({
 
   // Data sfârșit se recalculează automat la schimbarea datei de start
   const dataSfarsit = dataStart
-    ? adaugaZile(dataStart, DURATA_ABONAMENT_ZILE)
+    ? adaugaZile(dataStart, TIPURI_ABONAMENT[tip].durataZile)
     : "";
 
   function schimbaTip(nou: TipAbonament) {
@@ -132,7 +132,9 @@ export function EditAbonamentDialog({
             {dataSfarsit ? formatDate(dataSfarsit) : "—"}
           </p>
           <p className="text-xs text-muted">
-            {DURATA_ABONAMENT_ZILE} de zile de la data de start
+            {TIPURI_ABONAMENT[tip].durataZile === 0
+              ? "Aceeași zi"
+              : `${TIPURI_ABONAMENT[tip].durataZile} de zile de la data de start`}
           </p>
         </div>
 

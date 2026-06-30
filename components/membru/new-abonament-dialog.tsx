@@ -11,23 +11,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { adaugaZile, aziISO, formatDate, formatLei } from "@/lib/utils";
-import { DURATA_ABONAMENT_ZILE, TIPURI_ABONAMENT } from "@/types";
+import { TIPURI_ABONAMENT } from "@/types";
 import type { TipAbonament } from "@/types";
 
 export function NewAbonamentDialog({ membruId }: { membruId: string }) {
   const router = useRouter();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
-  const [tip, setTip] = useState<TipAbonament>("standard");
-  const [pret, setPret] = useState<string>(String(TIPURI_ABONAMENT.standard.pret));
+  const [tip, setTip] = useState<TipAbonament>("adulti");
+  const [pret, setPret] = useState<string>(String(TIPURI_ABONAMENT.adulti.pret));
   const [dataStart, setDataStart] = useState<string>(aziISO());
   const [seSalveaza, setSeSalveaza] = useState(false);
 
-  const dataSfarsit = adaugaZile(dataStart, DURATA_ABONAMENT_ZILE);
+  const dataSfarsit = adaugaZile(dataStart, TIPURI_ABONAMENT[tip].durataZile);
 
   function reset() {
-    setTip("standard");
-    setPret(String(TIPURI_ABONAMENT.standard.pret));
+    setTip("adulti");
+    setPret(String(TIPURI_ABONAMENT.adulti.pret));
     setDataStart(aziISO());
   }
 
@@ -130,7 +130,9 @@ export function NewAbonamentDialog({ membruId }: { membruId: string }) {
               {formatDate(dataSfarsit)}
             </p>
             <p className="text-xs text-muted">
-              {DURATA_ABONAMENT_ZILE} de zile de la data de start
+              {TIPURI_ABONAMENT[tip].durataZile === 0
+                ? "Aceeași zi"
+                : `${TIPURI_ABONAMENT[tip].durataZile} de zile de la data de start`}
             </p>
           </div>
 

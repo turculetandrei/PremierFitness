@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { adaugaZile, aziISO, formatDate } from "@/lib/utils";
-import { DURATA_ABONAMENT_ZILE, TIPURI_ABONAMENT } from "@/types";
+import { TIPURI_ABONAMENT } from "@/types";
 import type { TipAbonament } from "@/types";
 
 export function AddMemberDialog() {
@@ -20,19 +20,19 @@ export function AddMemberDialog() {
   const [open, setOpen] = useState(false);
   const [nume, setNume] = useState("");
   const [telefon, setTelefon] = useState("");
-  const [tip, setTip] = useState<TipAbonament>("standard");
-  const [pret, setPret] = useState<string>(String(TIPURI_ABONAMENT.standard.pret));
+  const [tip, setTip] = useState<TipAbonament>("adulti");
+  const [pret, setPret] = useState<string>(String(TIPURI_ABONAMENT.adulti.pret));
   const [dataStart, setDataStart] = useState<string>(aziISO());
   const [seSalveaza, setSeSalveaza] = useState(false);
 
-  // Data sfârșit se calculează automat: data start + 30 de zile
-  const dataSfarsit = adaugaZile(dataStart, DURATA_ABONAMENT_ZILE);
+  // Data sfârșit se calculează automat în funcție de durata tipului ales
+  const dataSfarsit = adaugaZile(dataStart, TIPURI_ABONAMENT[tip].durataZile);
 
   function reset() {
     setNume("");
     setTelefon("");
-    setTip("standard");
-    setPret(String(TIPURI_ABONAMENT.standard.pret));
+    setTip("adulti");
+    setPret(String(TIPURI_ABONAMENT.adulti.pret));
     setDataStart(aziISO());
   }
 
@@ -179,7 +179,9 @@ export function AddMemberDialog() {
               {formatDate(dataSfarsit)}
             </p>
             <p className="text-xs text-muted">
-              {DURATA_ABONAMENT_ZILE} de zile de la data de start
+              {TIPURI_ABONAMENT[tip].durataZile === 0
+                ? "Aceeași zi"
+                : `${TIPURI_ABONAMENT[tip].durataZile} de zile de la data de start`}
             </p>
           </div>
 

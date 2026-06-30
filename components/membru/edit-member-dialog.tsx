@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { adaugaZile, formatDate } from "@/lib/utils";
-import { DURATA_ABONAMENT_ZILE, TIPURI_ABONAMENT } from "@/types";
+import { TIPURI_ABONAMENT } from "@/types";
 import type { Abonament, Membru, TipAbonament } from "@/types";
 
 export function EditMemberDialog({
@@ -26,7 +26,7 @@ export function EditMemberDialog({
   const [open, setOpen] = useState(false);
   const [nume, setNume] = useState(membru.nume);
   const [telefon, setTelefon] = useState(membru.telefon ?? "");
-  const [tip, setTip] = useState<TipAbonament>(abonamentActiv?.tip ?? "standard");
+  const [tip, setTip] = useState<TipAbonament>(abonamentActiv?.tip ?? "adulti");
   const [pret, setPret] = useState<string>(
     abonamentActiv ? String(abonamentActiv.pret) : ""
   );
@@ -37,13 +37,13 @@ export function EditMemberDialog({
 
   // Data sfârșit se recalculează automat la schimbarea datei de start
   const dataSfarsit = dataStart
-    ? adaugaZile(dataStart, DURATA_ABONAMENT_ZILE)
+    ? adaugaZile(dataStart, TIPURI_ABONAMENT[tip].durataZile)
     : "";
 
   function deschide() {
     setNume(membru.nume);
     setTelefon(membru.telefon ?? "");
-    setTip(abonamentActiv?.tip ?? "standard");
+    setTip(abonamentActiv?.tip ?? "adulti");
     setPret(abonamentActiv ? String(abonamentActiv.pret) : "");
     setDataStart(abonamentActiv?.data_start ?? "");
     setOpen(true);
@@ -198,7 +198,9 @@ export function EditMemberDialog({
                   {dataSfarsit ? formatDate(dataSfarsit) : "—"}
                 </p>
                 <p className="text-xs text-muted">
-                  {DURATA_ABONAMENT_ZILE} de zile de la data de start
+                  {TIPURI_ABONAMENT[tip].durataZile === 0
+                    ? "Aceeași zi"
+                    : `${TIPURI_ABONAMENT[tip].durataZile} de zile de la data de start`}
                 </p>
               </div>
             </>

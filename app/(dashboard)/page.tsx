@@ -78,6 +78,8 @@ export default async function DashboardPage() {
     .map(([, list]) => abonamentCurent(list))
     .filter((a): a is AbonamentCuMembru => {
       if (!a) return false;
+      // Ședințele unice (1 zi) nu intră în alerta de expirare
+      if (a.tip === "sedinta") return false;
       const zile = zileRamase(a.data_sfarsit);
       return zile >= 0 && zile <= 3;
     })
