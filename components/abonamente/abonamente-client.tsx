@@ -125,52 +125,50 @@ export function AbonamenteClient({ randuri }: { randuri: AbonamentRand[] }) {
   return (
     <>
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4">
-        <div className="grid grid-cols-2 gap-3 sm:contents">
-          <div className="w-full sm:w-44">
-            <Label htmlFor="filtru-status">Status</Label>
-            <Select
-              id="filtru-status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value as FiltruStatus)}
-            >
-              <option value="toate">Toate</option>
-              <option value="activ">Activ</option>
-              <option value="expirat">Expirat</option>
-            </Select>
-          </div>
-          <div className="w-full sm:w-44">
-            <Label htmlFor="filtru-tip">Tip</Label>
-            <Select
-              id="filtru-tip"
-              value={tip}
-              onChange={(e) => setTip(e.target.value as FiltruTip)}
-            >
-              <option value="toate">Toate</option>
-              {Object.values(TIPURI_ABONAMENT).map((t) => (
-                <option key={t.tip} value={t.tip}>
-                  {t.eticheta}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className="w-full sm:w-44">
-            <Label htmlFor="filtru-de-la">De la</Label>
-            <Input
-              id="filtru-de-la"
-              type="date"
-              value={deLa}
-              onChange={(e) => setDeLa(e.target.value)}
-            />
-          </div>
-          <div className="w-full sm:w-44">
-            <Label htmlFor="filtru-pana-la">Până la</Label>
-            <Input
-              id="filtru-pana-la"
-              type="date"
-              value={panaLa}
-              onChange={(e) => setPanaLa(e.target.value)}
-            />
-          </div>
+        <div className="w-full sm:w-44">
+          <Label htmlFor="filtru-status">Status</Label>
+          <Select
+            id="filtru-status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as FiltruStatus)}
+          >
+            <option value="toate">Toate</option>
+            <option value="activ">Activ</option>
+            <option value="expirat">Expirat</option>
+          </Select>
+        </div>
+        <div className="w-full sm:w-44">
+          <Label htmlFor="filtru-tip">Tip</Label>
+          <Select
+            id="filtru-tip"
+            value={tip}
+            onChange={(e) => setTip(e.target.value as FiltruTip)}
+          >
+            <option value="toate">Toate</option>
+            {Object.values(TIPURI_ABONAMENT).map((t) => (
+              <option key={t.tip} value={t.tip}>
+                {t.eticheta}
+              </option>
+            ))}
+          </Select>
+        </div>
+        <div className="w-full sm:w-44">
+          <Label htmlFor="filtru-de-la">De la</Label>
+          <Input
+            id="filtru-de-la"
+            type="date"
+            value={deLa}
+            onChange={(e) => setDeLa(e.target.value)}
+          />
+        </div>
+        <div className="w-full sm:w-44">
+          <Label htmlFor="filtru-pana-la">Până la</Label>
+          <Input
+            id="filtru-pana-la"
+            type="date"
+            value={panaLa}
+            onChange={(e) => setPanaLa(e.target.value)}
+          />
         </div>
 
         <div className="flex gap-2 sm:ml-auto sm:items-end">
